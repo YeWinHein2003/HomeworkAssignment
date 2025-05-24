@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to right, #a8ff78, #78ffd6);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 80%;
+            display: flex;
+            gap: 30px;
+        }
+
+        .form-container,
+        .result-container {
+            flex: 1;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .form-container {
+            background: #f0f8ff;
+        }
+
+        .result-container {
+            background: #f9ffe6;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input,
+        select,
+        button {
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 20px;
+            width: 90%;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #66bb6a;
+            box-shadow: 0 0 5px rgba(102, 187, 106, 0.5);
+        }
+
+        button {
+            background-color: #66bb6a;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #57a05a;
+        }
+
+        .result-box {
+            padding: 15px;
+            border: 1px dashed #ccc;
+            border-radius: 5px;
+        }
+
+        .result-box p {
+            font-size: 1rem;
+            margin: 5px 0;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        
+        <div class="form-container">
+            <h2>Student Registration</h2>
+            <form id="registrationForm">
+                <input type="text" id="studentName" placeholder="Full Name" required>
+                <input type="email" id="studentEmail" placeholder="Email Address" required>
+                <input type="text" id="studentRoll" placeholder="Roll Number" required>
+                <select id="studentDepartment" required>
+                    <option value="">Select Department</option>
+                    <option value="Computer Science">Computer Science</option>
+                    <option value="Mechanical">Mechanical</option>
+                    <option value="Electrical">Electrical</option>
+                    <option value="Civil">Civil</option>
+                </select>
+                <button type="submit">Register</button>
+            </form>
+        </div>
+
+        
+        <div class="result-container">
+            <h2>Registration Details</h2>
+            <div class="result-box" id="registrationResult">
+                <p>Registration details will be displayed here.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const registrationForm = document.getElementById('registrationForm');
+        const registrationResult = document.getElementById('registrationResult');
+
+        registrationForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('studentName').value.trim();
+            const email = document.getElementById('studentEmail').value.trim();
+            const roll = document.getElementById('studentRoll').value.trim();
+            const department = document.getElementById('studentDepartment').value;
+
+            registrationResult.innerHTML = `
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Roll Number:</strong> ${roll}</p>
+                <p><strong>Department:</strong> ${department}</p>
+                <p style="color: green;"><strong>Status:</strong> Successfully Registered!</p>`;
+            registrationForm.reset();
+        });
+    </script>
+</body>
+
+</html>
