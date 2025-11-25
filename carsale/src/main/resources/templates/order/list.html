@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+th:replace="layout :: layout('Order List', ~{::main}, 'orders')">
 <head>
     <meta charset="UTF-8">
     <title>Order List</title>
@@ -9,14 +10,7 @@
             padding: 0.25rem 0.5rem;
             font-size: 0.95rem;
         }
-        .navbar-container {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background-color: #f8f9fa !important;
-            border-bottom: 1px solid #dee2e6;
-            width: 100%;
-        }
+
         .container-fluid {
             padding-left: 15px;
             padding-right: 15px;
@@ -28,96 +22,49 @@
     </style>
 </head>
 <body>
-<!--////////-->
-<div th:fragment="navbar" class="navbar-container">
-    <div class="container-fluid">
-        <div class="row align-items-center py-2 border-bottom">
-            <div class="col-md-6 d-flex align-items-center">
-                <img src="/images/logo.png" alt="Logo" class="me-3" style="height: 40px;">
-                <h4 class="mb-0">Car Sale Management</h4>
-            </div>
-            <div class="col-md-6 d-flex justify-content-end">
-                <a href="/login" class="btn btn-outline-primary me-2">Log In</a>
-                <a href="/register" class="btn btn-outline-secondary">Register</a>
-            </div>
-        </div>
-        <div class="row py-2 border-bottom">
-            <div class="col-12 d-flex justify-content-center">
-                <a href="/" class="btn btn-link me-3">Home</a>
-                <a href="/cars" class="btn btn-link me-3">Cars</a>
-                <a href="/customers" class="btn btn-link me-3">Customers</a>
-                <a href="/orders" class="btn btn-link">Orders</a>
-            </div>
-        </div>
-    </div>
-</div>
-<!--///////////-->
-<!--th:replace="layout :: navbar"-->
-<div class="container-fluid mt-5" style="width: auto" >
 
-    <h1>Order List</h1>
-    <a href="/orders/new" class="btn btn-primary mb-3">Add New Order</a>
-    <table class="table table-striped table-sm">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Order Date</th>
-            <th>Customer</th>
-            <th>Phone Number</th>
-            <th>Car</th>
-            <th>Quantity</th>
-            <th>Unit Price(Kyat)</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="detail : ${orderDetails}" th:if="${detail != null and detail.id != null}">
-            <td th:text="${detail.order.orderId}"></td>
-            <td th:text="${detail.order.orderDate}"></td>
-            <td th:text="${detail.order.customer.customerName}"></td>
-            <td th:text="${detail.order.customer.phoneNumber}"></td>
-            <td th:text="${detail.car.carName}"></td>
-            <td th:text="${detail.quantity}"></td>
-            <td th:text="${detail.car.unitPrice}"></td>
-            <td>
-                <a th:href="@{/orders/edit/{id}(id=${detail.order.orderId})}" class="btn btn-warning btn-sm">Edit</a>
-                <form th:action="@{/orders/delete/{id}(id=${detail.order.orderId})}" method="post" style="display:inline;">
-                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a href="/" class="btn btn-secondary">Back to Home</a>
-</div>
-<footer th:fragment="footer" class="py-4 mt-5">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-4">
-                <h5>Car Sale Management</h5>
-                <p>Efficiently manage your car sales, customers, and orders.</p>
-            </div>
-            <div class="col-md-4">
-                <h5>Quick Links</h5>
-                <ul class="list-unstyled">
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/cars">Cars</a></li>
-                    <li><a href="/customers">Customers</a></li>
-                    <li><a href="/orders">Orders</a></li>
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h5>Contact Us</h5>
-                <p>Email: Ooka@gmail.com</p>
-                <p>Phone:09856877689</p>
-            </div>
-        </div>
-        <hr class="my-4">
-        <div class="text-center">
-            <p>&copy; 2025 Car Sale Management. All rights reserved.</p>
-        </div>
+<!--th:replace="layout :: navbar"-->
+<main>
+    <div class="container-fluid mt-5" style="width: auto" th:fragment="content">
+
+        <h1>Order List</h1>
+        <a href="/orders/new" class="btn btn-primary mb-3">Add New Order</a>
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Order Date</th>
+                <th>Customer</th>
+                <th>Phone Number</th>
+                <th>Car</th>
+                <th>Quantity</th>
+                <th>Unit Price(Kyat)</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="detail : ${orderDetails}" th:if="${detail != null and detail.id != null}">
+                <td th:text="${detail.order.orderId}"></td>
+                <td th:text="${detail.order.orderDate}"></td>
+                <td th:text="${detail.order.customer.customerName}"></td>
+                <td th:text="${detail.order.customer.phoneNumber}"></td>
+                <td th:text="${detail.car.carName}"></td>
+                <td th:text="${detail.quantity}"></td>
+                <td th:text="${detail.car.unitPrice}"></td>
+                <td>
+                    <a th:href="@{/orders/edit/{id}(id=${detail.order.orderId})}" class="btn btn-warning btn-sm">Edit</a>
+                    <form th:action="@{/orders/delete/{id}(id=${detail.order.orderId})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a href="/" class="btn btn-secondary">Back to Home</a>
     </div>
-</footer>
+</main>
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
